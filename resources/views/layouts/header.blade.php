@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -8,12 +8,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Recert</a>
+      <a class="navbar-brand" href="{{URL::to('/')}}">Recert</a>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/auth/login">Login</a></li>
-        <li><a href="/auth/register">Register</a></li>
+        <li><a href="{{URL::to('/auth/login')}}">Login</a></li>
+        <li><a href="{{URL::to('/auth/register')}}">Register</a></li>
       </ul>
     </div>
   </div>
