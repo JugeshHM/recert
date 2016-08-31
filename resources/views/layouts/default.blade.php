@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Recert - @yield('title')</title>
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,600" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet" type="text/css" />
     <link href="/css/app.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
