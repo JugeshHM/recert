@@ -145,6 +145,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Zizaco\Entrust\EntrustServiceProvider::class,
+        'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
+        Barryvdh\Cors\ServiceProvider::class,
+
     ],
 
     /*
@@ -193,6 +197,11 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
+        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
+        'JWTAuth'   => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory'=> Tymon\JWTAuth\Facades\JWTFactory::class
+
     ],
 
+    'secret' => env('JWT_SECRET'),
 ];
