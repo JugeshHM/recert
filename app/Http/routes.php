@@ -12,18 +12,13 @@
 */
 
 Route::get('/', function () {
-    return View::make('pages.welcome');
+    return view('welcome');
 })->name('home');
 
-// Authentication routes...
-Route::get('auth/login', 'Auth\AuthController@getLogin')->name('login');
-Route::post('auth/login', 'Auth\AuthController@postLogin')->name('login');
-Route::get('auth/logout', 'Auth\AuthController@getLogout')->name('logout');
+Route::group(array('prefix' => 'api/v1'), function() {
+    // User Routes
+    Route::post('/login', 'TokenAuthController@postLogin');
+    Route::post('/register', 'TokenAuthController@postRegister');
 
-// Registration routes...
-Route::get('auth/register', 'Auth\AuthController@getRegister')->name('register');
-Route::post('auth/register', 'Auth\AuthController@postRegister')->name('register');
-
-Route::get('/home', function () {
-    return redirect()->route('home');
+    Route::get('/logout', 'Auth\AuthController@getLogout');
 });
