@@ -21,6 +21,11 @@ Route::group(array('prefix' => 'api/v1'), function() {
     Route::post('/register', 'TokenAuthController@postRegister');
 
     Route::get('/logout', 'Auth\AuthController@getLogout');
+    Route::get('/profile', 'TokenAuthController@getProfile');
+
+    Route::get('/user/{id?}', 'UserController@getUser');
+    Route::put('/user/{id}', 'UserController@updateUser');
+    Route::delete('/user/{id}', 'UserController@deleteUser');
     Route::get('/role/{id?}', 'RoleController@getRole');
 });
 Route::group(['prefix' => 'api/v1', 'middleware' => ['ability:admin,create-role']], function() {

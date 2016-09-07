@@ -51,7 +51,7 @@ class TokenAuthController extends Controller
         return response()->json(compact('token'));
     }
 
-    public function getAuthenticatedUser()
+    public function getProfile()
     {
         try {
             if (! $user = JWTAuth::parseToken()->authenticate()) {
