@@ -22,4 +22,8 @@ Route::group(array('prefix' => 'api/v1'), function() {
 
     Route::get('/logout', 'Auth\AuthController@getLogout');
     Route::get('/profile', 'TokenAuthController@getProfile');
+
+    Route::get('/user/{id?}', 'UserController@getUser');
+    Route::put('/user/{id}', 'UserController@updateUser');
+    Route::delete('/user/{id}', 'UserController@deleteUser');
 });
