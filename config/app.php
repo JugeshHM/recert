@@ -146,7 +146,6 @@ return [
         App\Providers\RouteServiceProvider::class,
         /*********Role based permission***********/
         Zizaco\Entrust\EntrustServiceProvider::class,
-        Zizaco\Entrust\EntrustServiceProvider::class,
 
         'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
         Barryvdh\Cors\ServiceProvider::class,
@@ -199,7 +198,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
         /*******Role based permission***********/
-        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
 
         'JWTAuth'   => Tymon\JWTAuth\Facades\JWTAuth::class,

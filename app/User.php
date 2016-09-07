@@ -10,17 +10,17 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
+
  
 class User extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
                                     CanResetPasswordContract
 {
-    use Authenticatable, Authorizable, CanResetPassword, EntrustUserTrait;
-            {
+    use Authenticatable, Authorizable, CanResetPassword,
+        EntrustUserTrait {
             EntrustUserTrait ::can insteadof Authorizable; //add insteadof avoid php trait conflict resolution
-         }
-
-    /**
+        }
+        /**
      * The database table used by the model.
      *
      * @var string

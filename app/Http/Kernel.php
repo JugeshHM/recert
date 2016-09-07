@@ -34,9 +34,10 @@ class Kernel extends HttpKernel
         /**************Role based permission*****************/
         'role' => \Zizaco\Entrust\Middleware\EntrustRole::class,
         'permission' => \Zizaco\Entrust\Middleware\EntrustPermission::class,
-        'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class,
 
         'jwt.auth' => \Tymon\JWTAuth\Middleware\GetUserFromToken::class,
         'jwt.refresh' => \Tymon\JWTAuth\Middleware\RefreshToken::class,
+        // ... Other middlewares
+        'ability' => 'App\Http\Middleware\TokenEntrustAbility',
     ];
 }
