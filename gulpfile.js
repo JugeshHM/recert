@@ -1,4 +1,8 @@
 var elixir = require('laravel-elixir');
+require('./tasks/angular.task.js');
+require('./tasks/bower.task.js');
+require('./tasks/ngHtml2Js.task.js');
+require('laravel-elixir-livereload');
 
 /*
  |--------------------------------------------------------------------------
@@ -12,5 +16,21 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss');
+    mix
+        .bower()
+        .angular('./client/')
+        .ngHtml2Js('./client/**/*.html')
+        .sass('./client/**/*.scss', 'public/css')
+        //.copy('./client/app/**/*.html', 'public/views/app/')
+        .livereload([
+            'public/js/vendor.js',
+            'public/js/partials.js',
+            'public/js/app.js',
+            'public/css/vendor.css',
+            'public/css/app.css'
+        ], {
+            liveCSS: true
+        });
+
+    //.phpUnit();
 });

@@ -149,6 +149,7 @@ return [
 
         'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
         Barryvdh\Cors\ServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
 
@@ -201,7 +202,8 @@ return [
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
 
         'JWTAuth'   => Tymon\JWTAuth\Facades\JWTAuth::class,
-        'JWTFactory'=> Tymon\JWTAuth\Facades\JWTFactory::class
+        'JWTFactory'=> Tymon\JWTAuth\Facades\JWTFactory::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
     ],
 
