@@ -12,8 +12,16 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 })->name('home');
+
+Route::get('{all}', function () {
+    return view('index');
+})->name('home');
+
+Route::get('/unsupported-browser', function() {
+    return view('unsupported');
+})->name('unsupported');
 
 Route::group(array('prefix' => 'api/v1'), function() {
     // User Routes

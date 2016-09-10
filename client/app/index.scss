@@ -1,0 +1,38 @@
+/**
+ * @description: Stylesheet for App
+ */
+
+html {
+  /** remove iOS text size adjust without disabling user zoom */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  /** eliminate 300ms click delay */
+  -ms-touch-action: manipulation; /** IE10 */
+  touch-action: manipulation; /** IE11 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+  width: 100%;
+}
+
+/**
+ * variables
+ */
+
+$use-percent: true;
+$is-fluid: true;
+$base-width: 100%;
+$base-col-count: 12;
+
+body {
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+    background: #fefefd;
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    transition: all .15s linear;
+    margin: 0;
+    padding: 0;
+}

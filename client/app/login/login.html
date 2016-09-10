@@ -1,0 +1,18 @@
+<div class="row login">
+  <div class="twelve columns">
+    <h1>Welcome to Recert</h1>
+  </div>
+  <form class="u-max-full-width" data-ng-submit="lc.login()">
+    <div class="row">
+      <div class="six columns">
+        <label for="EmailInput">Email</label>
+        <input autocomplete="off" data-ng-model="lc.auth.email" data-ng-required="true" class="u-full-width" placeholder="test@recert.com" id="EmailInput" type="email">
+      </div>
+      <div class="six columns">
+        <label for="PasswordInput">Password</label>
+        <input data-ng-model="lc.auth.password" data-ng-required="true" class="u-full-width" placeholder="xxxxxx" id="PasswordInput" type="password">
+      </div>
+    </div>
+    <button type="submit" class="button-primary">Login</button>
+  </form>
+</div>

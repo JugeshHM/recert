@@ -5,3 +5,5 @@ composer.lock
 Homestead.yaml
 Homestead.json
 /public/css
+/public/js
+/bower_components

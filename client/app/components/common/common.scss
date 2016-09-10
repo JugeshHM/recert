@@ -1,0 +1,53 @@
+$brand-primary:         #2C3E50;
+$brand-success:         #18BC9C;
+$brand-info:            #3498DB;
+$brand-warning:         #F39C12;
+$brand-danger:          #E74C3C;
+
+
+.section {
+    display: block;
+}
+
+footer {
+    display: block;
+    border-top: 1px solid #e7e7e7;
+    padding: 30px 0 0 0;
+    margin-top: 30px;
+}
+/* remove the gray background color from active links in IE */
+a {
+  background: transparent;
+  cursor: pointer;
+}
+/* address style set to "bolder" in Firefox, Safari and Chrome */
+b, strong { font-weight: bold; }
+
+/* address "overflow" set to "hidden" in IE */
+button { overflow: visible; }
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+.text-primary {
+    color: $brand-primary;
+}
+.text-info {
+    color: $brand-info;
+}
+.text-success {
+    color: $brand-success;
+}
+.text-danger {
+    color: $brand-danger;
+}
+.text-center {
+    text-align: center;
+}
+.text-left {
+    text-align: left;
+}
+.text-right {
+    text-align: right;
+}
+.text-justify {
+    text-align: justify;
+}

@@ -1,0 +1,19 @@
+.main {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: table;
+    font-weight: 300;
+    .main-container {
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;
+        .main-content {
+            text-align: center;
+            display: inline-block;
+            .title {
+                font-size: 48px;
+            }
+        }
+    }
+}
