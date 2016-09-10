@@ -19,6 +19,18 @@ Run below commands before running Server
 
 #### Development
 
+- Create a pre-commit script for error check and save it under .git/hooks/pre-commit
+
+```shell
+#!/bin/sh
+jscs client/**/*.js
+jshint client/**/*.js
+phpcs --standard=psr2 app/
+exec 1>&2
+```
+- Give executable permission
+
+
 ##### Running Server
 
 ```shell

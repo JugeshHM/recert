@@ -14,16 +14,16 @@
             if (params.status === false) {
                 $rootScope.logged = RECERT_CONSTANTS.SECURITY.LOGGED;
             }
-        });
+        }),
 
-        var stateStartCall = $rootScope.$on('$stateChangeStart', function(event, state) {
+        stateStartCall = $rootScope.$on('$stateChangeStart', function(event, state) {
             if (!Auth.checkPermissionForView(state.data)){
                 event.preventDefault();
-                $state.go("login", {}, {location: true, inherit: false});
+                $state.go("login", { }, { location: true, inherit: false });
             }
-        });
+        }),
 
-        var stateSuccessCall = $rootScope.$on('$stateChangeSuccess', function(event, state) {
+        stateSuccessCall = $rootScope.$on('$stateChangeSuccess', function(event, state) {
             $rootScope.pageTitle = (angular.isDefined(state.data.title) ? state.data.title + ' - ' : '') + 'Recert';
             $urlRouter.sync();
         });
