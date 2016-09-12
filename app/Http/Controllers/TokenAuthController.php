@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response as HttpResponse;
 
 use JWTAuth;
 use DateTime;
@@ -41,7 +42,7 @@ class TokenAuthController extends Controller
 
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 401);
+                return response()->json(['error' => 'invalid_credentials'], HttpResponse::HTTP_UNAUTHORIZED);
             }
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token'], 500);
@@ -55,7 +56,7 @@ class TokenAuthController extends Controller
     {
         try {
             if (! $user = JWTAuth::parseToken()->authenticate()) {
-                return  response()->json(['user_not_found'],  404);
+                return  response()->json(['user_not_found'],  HttpResponse::HTTP_NOT_FOUND);
             }
         } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
             return response()->json(['token_expired'], $e->getStatusCode());

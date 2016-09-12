@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response as HttpResponse;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -17,7 +18,7 @@ class RoleController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function getRole ($id = null, $status = 200) {
+    public function getRole ($id = null, $status = HttpResponse::HTTP_OK) {
         if ( $id == null) {
             $roles = Role::orderBy('id', 'asc')->get();
         } else {
@@ -31,7 +32,7 @@ class RoleController extends Controller
     */
     public function postRole(Request $request) {
         $date = new DateTime();
-        $status = 201;
+        $status = HttpResponse::HTTP_CREATED;
         $role = new Role;
 
         $role->name = $request->input('name');
@@ -54,7 +55,7 @@ class RoleController extends Controller
      */
     public function updateRole (Request $request, $id) {
         $date = new DateTime();
-        $status = 202;
+        $status = HttpResponse::HTTP_ACCEPTED;
         $role = Role::find($id);
         $role->name = $request->input('name');
         $role->display_name = $request->input('display_name');
@@ -70,7 +71,7 @@ class RoleController extends Controller
      * @return Response
      */
     public function deleteRole (Request $request, $id) {
-        $status = 204;
+        $status = HttpResponse::HTTP_NOT_FOUND;
         $role = Role::find($id);
         // Regular Delete
         $role->delete(); // This will work no matter what

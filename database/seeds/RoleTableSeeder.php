@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+
 use App\Role;
+
 class RoleTableSeeder extends Seeder
 {
     /**
@@ -11,20 +13,17 @@ class RoleTableSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UserTableSeeder::class);
         DB::table('roles')->delete();
 
         $roles = array(
-            ['name' => 'admin', 'display_name' => 'Administrator', 'description' =>'Administrator'],
-            ['name' => 'employee', 'display_name' => 'Employee', 'description' =>'employee'],
-            ['name' => 'employer', 'display_name' => 'Employer', 'description' =>'employer']
+            array('name' => 'admin', 'display_name' => 'Administrator', 'description' => 'Administrator'),
+            array('name' => 'employee', 'display_name' => 'Employee', 'description' => 'Employee'),
+            array('name' => 'employer', 'display_name' => 'Employer', 'description' => 'Employer')
         );
 
-        // Loop through each user above and create the record for them in the database
-        foreach ($roles as $role)
-        {
+        // Loop through each role above and create the record for them in the database
+        foreach ($roles as $role) {
             Role::create($role);
         }
-
     }
 }

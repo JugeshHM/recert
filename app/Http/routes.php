@@ -15,10 +15,6 @@ Route::get('/', function () {
     return view('index');
 })->name('home');
 
-Route::get('{all}', function () {
-    return view('index');
-})->name('home');
-
 Route::get('/unsupported-browser', function() {
     return view('unsupported');
 })->name('unsupported');
@@ -36,6 +32,7 @@ Route::group(array('prefix' => 'api/v1'), function() {
     Route::delete('/user/{id}', 'UserController@deleteUser');
     Route::get('/role/{id?}', 'RoleController@getRole');
 });
+
 Route::group(['prefix' => 'api/v1', 'middleware' => ['ability:admin,create-role']], function() {
     Route::post('/role', 'RoleController@postRole');
 });

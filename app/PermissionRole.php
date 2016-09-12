@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Zizaco\Entrust\EntrustRole;
+use Illuminate\Database\Eloquent\Model;
 
-class PermissionRole extends EntrustRole
+class PermissionRole extends Model
 {
     /**
      * The database table used by the model.
@@ -19,4 +19,6 @@ class PermissionRole extends EntrustRole
      * @var array
      */
     protected $fillable = ['permission_id', 'role_id'];
+
+    public $timestamps = false;
 }

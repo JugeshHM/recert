@@ -4,6 +4,6 @@ namespace App\Models;
 
 use Zizaco\Entrust\EntrustRole;
 
-class Role extends EntrustRole
+class RoleUser extends EntrustRole
 {
 }
