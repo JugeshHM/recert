@@ -8,11 +8,13 @@
     function RecertInterceptor($q, $log, RECERT_CONSTANTS) {
         return {
             request : function(config) {
-                if (angular.isDefined(config.url) && angular.isDefined(RECERT_CONSTANTS.SECURITY.TOKEN)) {
+                if (angular.isDefined(config.url) &&
+                    angular.isDefined(RECERT_CONSTANTS.SECURITY.TOKEN) &&
+                    RECERT_CONSTANTS.SECURITY.TOKEN !== null) {
 
                     config.headers['Authorization'] = 'Bearer '+ RECERT_CONSTANTS.SECURITY.TOKEN;
-                    config.headers['Content-Type'] = 'application/json';
                 }
+                config.headers['Content-Type'] = 'application/json';
                 return config;
             },
 

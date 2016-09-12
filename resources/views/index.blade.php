@@ -14,6 +14,7 @@
         <![endif]-->
     </head>
     <body>
+        <recert-navbar data-ng-if="logged"></recert-navbar>
         <div class="section content">
             <div class="container" ui-view="main"></div>
         </div>

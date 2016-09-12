@@ -21,18 +21,25 @@ html {
 
 $use-percent: true;
 $is-fluid: true;
-$base-width: 100%;
 $base-col-count: 12;
+$base-font-size: 13px;
+$background-color: #fefefd;
+
+@import '../../bower_components/normalize-scss/sass/normalize/import-now';
+@import '../../bower_components/skeleton-sass/skeleton/core/config';
+@import '../../bower_components/skeleton-sass/skeleton/themes/fresh/vars';
+@import '../../bower_components/skeleton-sass/skeleton/themes/fresh/base';
+@import '../../bower_components/skeleton-sass/skeleton/themes/fresh/skeleton';
 
 body {
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
-    background: #fefefd;
     -webkit-transition: all .15s linear;
     -moz-transition: all .15s linear;
     transition: all .15s linear;
     margin: 0;
     padding: 0;
 }
+
