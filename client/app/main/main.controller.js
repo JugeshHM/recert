@@ -5,9 +5,13 @@
         .module('recert')
         .controller('MainController', MainController);
 
-    function MainController($log, RECERT_CONSTANTS) {
+    function MainController($state, $log, RECERT_CONSTANTS) {
         var vm = this;
-        vm.logged = RECERT_CONSTANTS.SECURITY.LOGGED;
-        $log.debug('in Dashboard');
+        vm.auth = RECERT_CONSTANTS.SECURITY;
+        if (vm.auth.LOGGED !== true) {
+            $state.go('login');
+            return false;
+        }
+
     }
 })();

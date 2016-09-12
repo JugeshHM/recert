@@ -31,8 +31,8 @@
 
         $httpProvider.interceptors.push('RecertInterceptor');
 
-        $localStorageProvider.setKeyPrefix('west-chester-');
-        $sessionStorageProvider.setKeyPrefix('west-chester-');
+        $localStorageProvider.setKeyPrefix('recert-');
+        $sessionStorageProvider.setKeyPrefix('recert-');
         $localStorageProvider.setSerializer(serialize);
         $localStorageProvider.setDeserializer(deserialize);
 

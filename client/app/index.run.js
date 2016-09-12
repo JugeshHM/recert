@@ -7,6 +7,9 @@
 
     function Init ($rootScope, $log, $state, $urlRouter, Auth, RECERT_CONSTANTS){
 
+        Auth.init();
+        $rootScope.logged = false;
+
         var loggedinStateCall = $rootScope.$on('recert:jsevent:logged', function(event, params) {
             if (params.status === true) {
                 $rootScope.logged = RECERT_CONSTANTS.SECURITY.LOGGED;
@@ -21,6 +24,7 @@
                 event.preventDefault();
                 $state.go("login", { }, { location: true, inherit: false });
             }
+            $rootScope.logged = RECERT_CONSTANTS.SECURITY.LOGGED;
         }),
 
         stateSuccessCall = $rootScope.$on('$stateChangeSuccess', function(event, state) {

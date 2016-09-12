@@ -15,7 +15,7 @@
                 url: RECERT_CONSTANTS.REST_API_BASE + RECERT_CONSTANTS.API.LOGIN.URI,
                 method: RECERT_CONSTANTS.API.LOGIN.METHOD,
                 data: angular.extend(RECERT_CONSTANTS.API.LOGIN.PARAMS, params)
-            }, function(response) {
+            }).then(function(response) {
                 defer.resolve(response.data);
             }, function() {
                 defer.reject();
@@ -43,22 +43,22 @@
             }
         };
 
-        auth.login = function(data){
-            return $q(function(resolve, reject){
-                Profile(data).then(function(data) {
-                    $sessionStorage.logged = true;
-                    $sessionStorage.token = data.token;
-                    $sessionStorage.user_permission = data.role | 'ADMIN';
+        auth.login = function(cred){
+            var defer = $q.defer();
+            Profile(cred).then(function(data) {
+                $sessionStorage.logged = true;
+                $sessionStorage.token = data.token;
+                $sessionStorage.user_permission = data.role | 'ADMIN';
 
-                    RECERT_CONSTANTS.SECURITY.LOGGED = true;
-                    RECERT_CONSTANTS.SECURITY.ROLE = data.role;
-                    RECERT_CONSTANTS.SECURITY.TOKEN = data.token;
-                    resolve();
-                    $rootScope.$broadcast('wps:jsevent:logged', {status: true});
-                }, function() {
-                    reject();
-                });
+                RECERT_CONSTANTS.SECURITY.LOGGED = true;
+                RECERT_CONSTANTS.SECURITY.ROLE = data.role;
+                RECERT_CONSTANTS.SECURITY.TOKEN = data.token;
+                $rootScope.$broadcast('recert:jsevent:logged', {status: true});
+                defer.resolve();
+            }, function() {
+                defer.reject();
             });
+            return defer.promise;
         };
 
         auth.logout = function() {
@@ -68,7 +68,7 @@
                 ROLE: '',
                 TOKEN: null
             };
-            $rootScope.$broadcast('wps:jsevent:logged', {status: false});
+            $rootScope.$broadcast('recert:jsevent:logged', {status: false});
         };
 
         auth.checkPermissionForView = function(view) {
