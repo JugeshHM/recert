@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Role;
+
 use App\User;
+use App\Role;
 use App\RoleUser;
 
 class RoleUserTableSeeder extends Seeder
@@ -14,20 +15,21 @@ class RoleUserTableSeeder extends Seeder
      */
     public function run()
     {
-        //
-        $role = DB::table('roles')
-                          ->select('id')
-                          ->where('name', '=', 'admin')
-                          ->first();
-        $user = DB::table('users')
-                          ->select('id')
-                          ->where('name', '=', 'admin')
-                          ->first();
+        DB::table('role_user')->delete();
+
+        $role = Role::where('name', '=', 'admin')
+            ->select('id')
+            ->first();
+        $user = User::where('name', '=', 'admin')
+            ->select('id')
+            ->first();
 
         $roles_user = array(
-                              ['user_id' => $user->id, 'role_id' =>$role->id],
-                          );
-         DB::table('role_user')->insert($roles_user);
+            'user_id' => $user->id,
+            'role_id' => $role->id
+        );
+
+        RoleUser::create($roles_user);
 
     }
 }

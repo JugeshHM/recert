@@ -8,6 +8,9 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
+use Redirect;
+use Request;
+
 class Handler extends ExceptionHandler
 {
     /**
@@ -42,6 +45,9 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        /**
+         * Token Exceptions
+         */
         if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
             return response(['Token is invalid'], 401);
         }
@@ -50,10 +56,16 @@ class Handler extends ExceptionHandler
             return response(['Token has expired'], 401);
         }
 
+        /**
+         *  Angularjs redirection
+         */
+        if($e instanceof NotFoundHttpException) {
+            return Redirect::to('/#/' . Request::path());
+        }
+
         if ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
         }
-
         return parent::render($request, $e);
     }
 }

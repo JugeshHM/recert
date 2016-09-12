@@ -12,20 +12,19 @@ class PermissionTableSeeder extends Seeder
      */
     public function run()
     {
-           // $this->call(UserTableSeeder::class);
-           DB::table('permissions')->delete();
+        // $this->call(UserTableSeeder::class);
+        DB::table('permissions')->delete();
 
-           $permissions = array(
-               ['name' => 'create-role', 'display_name' => 'create-role', 'description' =>'create-role'],
-               ['name' => 'update-role', 'display_name' => 'update-role', 'description' =>'update-role'],
-               ['name' => 'delete-role', 'display_name' => 'delete-role', 'description' =>'delete-role'],
-           );
+        $permissions = array(
+            array('name' => 'create-role', 'display_name' => 'Create Role', 'description' => 'Create a Role'),
+            array('name' => 'update-role', 'display_name' => 'Update Role', 'description' =>'Update a Role'),
+            array('name' => 'delete-role', 'display_name' => 'Delete Role', 'description' =>'Delete a Role')
+        );
 
-           // Loop through each user above and create the record for them in the database
-           foreach ($permissions as $permission)
-           {
-               Permission::create($permission);
-           }
+        // Loop through each permission above and create the record for them in the database
+        foreach ($permissions as $permission) {
+            Permission::create($permission);
+        }
 
     }
 }

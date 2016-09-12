@@ -1,9 +1,10 @@
 <?php
 
 namespace App;
-use Zizaco\Entrust\EntrustRole;
 
-class RoleUser extends EntrustRole
+use Illuminate\Database\Eloquent\Model;
+
+class RoleUser extends Model
 {
     /**
      * The database table used by the model.
@@ -18,4 +19,6 @@ class RoleUser extends EntrustRole
      * @var array
      */
     protected $fillable = ['user_id', 'role_id'];
+
+    public $timestamps = false;
 }

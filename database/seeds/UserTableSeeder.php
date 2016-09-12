@@ -12,13 +12,15 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        //
-        DB::table('users')->delete();
-        $user =  User::create(array(
-       'name'     => 'admin',
-       'email'    => 'admin@recert.com',
-       'password' => Hash::make('123456'),
-   ));
 
-}
+        DB::table('users')->delete();
+
+        $user = array(
+            'name'     => 'admin',
+            'email'    => 'admin@recert.com',
+            'password' => Hash::make('recert'),
+        );
+        User::create($user);
+
+    }
 }

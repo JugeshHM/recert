@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response as HttpResponse;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -16,7 +17,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getUser($id = null, $status = 200) {
+    public function getUser($id = null, $status = HttpResponse::HTTP_OK) {
         if ( $id == null) {
             $users = User::orderBy('id', 'asc')->get();
         } else {
@@ -33,7 +34,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function updateUser(Request $request, $id) {
-        $status = 202;
+        $status = HttpResponse::HTTP_ACCEPTED;
         $user = User::find($id);
         $user->name = $request->input('name');
         $user->email = $request->input('email');
@@ -48,7 +49,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function deleteUser($id) {
-        $status = 204;
+        $status = HttpResponse::HTTP_NO_CONTENT;
         $user = User::find($id);
         $user->delete();
         return response()->json(null, $status);
