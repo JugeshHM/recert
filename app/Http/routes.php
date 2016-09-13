@@ -18,7 +18,7 @@ Route::get('/', function () {
 Route::get('/unsupported-browser', function() {
     return view('unsupported');
 })->name('unsupported');
-
+/*
 Route::group(array('prefix' => 'api/v1'), function() {
     // User Routes
     Route::post('/login', 'TokenAuthController@postLogin');
@@ -59,4 +59,23 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['ability:admin,update-state
 });
 Route::group(['prefix' => 'api/v1', 'middleware' => ['ability:admin,delete-state']], function() {
     Route::delete('/state/{id}', 'StateController@deleteState');
+});
+
+*/
+//$api = app('api.router');
+$api = app('Dingo\Api\Routing\Router');
+
+$api->version('v1', ['namespace' => 'App\Http\Controllers'], function ($api) {
+    // Non-Authenticated Routes
+    $api->post('/login', 'TokenAuthController@postLogin');
+    $api->post('/register', 'TokenAuthController@postRegister');
+
+    // Authenticated Routes
+    $api->group(['middleware' => 'api.auth', 'protected' => true], function ($api) {
+        $api->get('/logout', 'Auth\AuthController@getLogout');
+        $api->get('/profile', 'TokenAuthController@getProfile');
+
+        $api->get('/role/{id?}', 'RoleController@getRole');
+        $api->get('/state/{id?}', 'StateController@getState');
+    });
 });
