@@ -7,7 +7,7 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" />
         <link rel="stylesheet" href="{!! asset('css/vendor.css') !!}">
         <link rel="stylesheet" href="{!! asset('css/app.css') !!}">
-        <title>Recert</title>
+        <title data-ng-bind="pageTitle">Recert</title>
         <base href='/'></base>
         <!--[if lt IE 10]>
         <script type="text/javascript">document.location.href = '/unsupported-browser'</script>
