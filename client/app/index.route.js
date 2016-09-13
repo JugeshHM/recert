@@ -21,7 +21,9 @@
                     controllerAs: 'lc'
                 }
             },
-            data: {}
+            data: {
+                title: 'Login'
+            }
         })
         .state('dashboard', {
             url: '/dashboard',
@@ -34,7 +36,8 @@
                 }
             },
             data: {
-                authentication: true
+                authentication: true,
+                title: 'Dashboard'
             }
         });
         $urlRouterProvider.otherwise('/');

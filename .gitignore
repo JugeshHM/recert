@@ -8,3 +8,5 @@ Homestead.json
 /bower_components
 *.lock
 composer.lock
+_ide_helper.php
+.phpstorm.meta.php
