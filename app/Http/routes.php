@@ -29,6 +29,7 @@ Route::group(array('prefix' => 'api/v1'), function() {
 
     Route::get('/role/{id?}', 'RoleController@getRole');
     Route::get('/state/{id?}', 'StateController@getState');
+    Route::get('/category/{id?}', 'CategoryController@getCategory');
 });
 
 Route::group(['prefix' => 'api/v1', 'middleware' => ['ability:admin,get-user']], function() {
@@ -59,4 +60,14 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['ability:admin,update-state
 });
 Route::group(['prefix' => 'api/v1', 'middleware' => ['ability:admin,delete-state']], function() {
     Route::delete('/state/{id}', 'StateController@deleteState');
+});
+
+Route::group(['prefix' => 'api/v1', 'middleware' => ['ability:admin,create-category']], function() {
+    Route::post('/category', 'CategoryController@postCategory');
+});
+Route::group(['prefix' => 'api/v1', 'middleware' => ['ability:admin,update-category']], function() {
+    Route::put('/category/{id}', 'CategoryController@updateCategory');
+});
+Route::group(['prefix' => 'api/v1', 'middleware' => ['ability:admin,delete-category']], function() {
+    Route::delete('/category/{id}', 'CategoryController@deleteCategory');
 });
