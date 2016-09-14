@@ -75,10 +75,6 @@ class CategoryController extends Controller
         $category = Category::find($id);
         // Regular Delete
         $category->delete(); // This will work no matter what
-        // Force Delete
-        //$category->users()->sync([]); // Delete relationship data
-        //$category->perms()->sync([]); // Delete relationship data
-        //$category->forceDelete(); // Now force delete will work regardless of whether the pivot table has cascading delete
         return response()->json(null, $status);
     }
 }
