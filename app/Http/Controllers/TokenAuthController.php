@@ -7,16 +7,16 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use JWTAuth;
 use DateTime;
+
+use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
-use App\User;
 use Illuminate\Support\Facades\Hash;
+use App\User;
 
 class TokenAuthController extends Controller
 {
-    public function postLogin(Request $request)
-    {
+    public function postLogin(Request $request) {
         $credentials = $request->only('email', 'password');
 
         try {
@@ -31,8 +31,7 @@ class TokenAuthController extends Controller
         return $this->response()->array(compact('token'));
     }
 
-    public function autoAuthenticate($user)
-    {
+    public function autoAuthenticate($user) {
         $user = (Object)$user;
         $credentials = [
             'email' => $user->email,
@@ -51,8 +50,7 @@ class TokenAuthController extends Controller
         return $this->response()->array(compact('token'));
     }
 
-    public function getProfile()
-    {
+    public function getProfile() {
         try {
             if (! $user = JWTAuth::parseToken()->authenticate()) {
                 return  $this->response()->errorNotFound('user_not_found');
@@ -67,8 +65,7 @@ class TokenAuthController extends Controller
         return $this->response()->array(compact('user'));
     }
 
-    public function postRegister(Request $request)
-    {
+    public function postRegister(Request $request) {
         $date = new DateTime();
         $newuser = [
             'name' => $date->getTimestamp(),
