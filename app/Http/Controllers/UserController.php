@@ -7,6 +7,9 @@ use Illuminate\Http\Response as HttpResponse;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use Exception;
+
 use App\User;
 
 class UserController extends Controller
@@ -17,13 +20,13 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getUser($id = null, $status = HttpResponse::HTTP_OK) {
+    public function getUser($id = null) {
         if ( $id == null) {
             $users = User::orderBy('id', 'asc')->get();
         } else {
             $users = User::find($id);
         }
-        return response()->json($users, $status);
+        return $this->response()->array($users);
     }
 
     /**
@@ -34,12 +37,17 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function updateUser(Request $request, $id) {
-        $status = HttpResponse::HTTP_ACCEPTED;
-        $user = User::find($id);
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->save();
-        return $this->getUser($user->id, $status);
+        try {
+            $status = HttpResponse::HTTP_ACCEPTED;
+            $user = User::find($id);
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
+            $user->save();
+            $response=$this->getUser($user->id);
+            return $response->setStatusCode($status);
+        } catch(Exception $e) {
+            return $this->response()->errorNotFound();
+        }
     }
 
     /**
@@ -49,9 +57,14 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function deleteUser($id) {
-        $status = HttpResponse::HTTP_NO_CONTENT;
-        $user = User::find($id);
-        $user->delete();
-        return response()->json(null, $status);
+        try{
+            $user = User::find($id);
+            if($user)
+            $user->delete();
+            return $this->response()->noContent();
+        } catch(Exception $e) {
+            return $this->response()->errorNotFound();
+        }
+        
     }
 }
