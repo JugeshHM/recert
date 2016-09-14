@@ -77,5 +77,18 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers'], function ($api) {
 
         $api->get('/role/{id?}', 'RoleController@getRole');
         $api->get('/state/{id?}', 'StateController@getState');
+
+        $api->get('/user/{id?}', [middleware =>['ability:admin,get-user'], uses=> 'UserController@getUser']);
+        $api->put('/user/{id}', [middleware =>['ability:admin,update-user'], uses=> 'UserController@updateUser']);
+        $api->delete('/user/{id}', [middleware =>['ability:admin,delete-user'], uses=> 'UserController@deleteUser']);
+
+        $api->post('/role', [middleware =>['ability:admin,create-role'], uses=> 'RoleController@postRole']);
+        $api->put('/role/{id}', [middleware =>['ability:admin,update-role'], uses=> 'RoleController@updateRole']);
+        $api->delete('/role/{id}', [middleware =>['ability:admin,delete-role'], uses=> 'RoleController@deleteRole']);
+
+        $api->post('/state', [middleware =>['ability:admin,create-state'], uses=> 'StateController@postState']);
+        $api->put('/state/{id}', [middleware =>['ability:admin,update-state'], uses=> 'StateController@updateState']);
+        $api->delete('/state/{id}', [middleware =>['ability:admin,delete-state'], uses=> 'StateController@deleteState']);
+
     });
 });

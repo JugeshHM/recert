@@ -33,9 +33,6 @@
         ]
     },
     "scripts": {
-        "pre-update-cmd": [
-            "php artisan clear-compiled"
-        ],
         "post-root-package-install": [
             "php -r \"copy('.env.example', '.env');\""
         ],
