@@ -18,52 +18,9 @@ Route::get('/', function () {
 Route::get('/unsupported-browser', function() {
     return view('unsupported');
 })->name('unsupported');
-/*
-Route::group(array('prefix' => 'api/v1'), function() {
-    // User Routes
-    Route::post('/login', 'TokenAuthController@postLogin');
-    Route::post('/register', 'TokenAuthController@postRegister');
 
-    Route::get('/logout', 'Auth\AuthController@getLogout');
-    Route::get('/profile', 'TokenAuthController@getProfile');
-
-    Route::get('/role/{id?}', 'RoleController@getRole');
-    Route::get('/state/{id?}', 'StateController@getState');
-});
-
-Route::group(['prefix' => 'api/v1', 'middleware' => ['ability:admin,get-user']], function() {
-    Route::get('/user/{id?}', 'UserController@getUser');
-});
-Route::group(['prefix' => 'api/v1', 'middleware' => ['ability:admin,update-user']], function() {
-    Route::put('/user/{id}', 'UserController@updateUser');
-});
-Route::group(['prefix' => 'api/v1', 'middleware' => ['ability:admin,delete-user']], function() {
-    Route::delete('/user/{id}', 'UserController@deleteUser');
-});
-
-Route::group(['prefix' => 'api/v1', 'middleware' => ['ability:admin,create-role']], function() {
-    Route::post('/role', 'RoleController@postRole');
-});
-Route::group(['prefix' => 'api/v1', 'middleware' => ['ability:admin,update-role']], function() {
-    Route::put('/role/{id}', 'RoleController@updateRole');
-});
-Route::group(['prefix' => 'api/v1', 'middleware' => ['ability:admin,delete-role']], function() {
-    Route::delete('/role/{id}', 'RoleController@deleteRole');
-});
-
-Route::group(['prefix' => 'api/v1', 'middleware' => ['ability:admin,create-state']], function() {
-    Route::post('/state', 'StateController@postState');
-});
-Route::group(['prefix' => 'api/v1', 'middleware' => ['ability:admin,update-state']], function() {
-    Route::put('/state/{id}', 'StateController@updateState');
-});
-Route::group(['prefix' => 'api/v1', 'middleware' => ['ability:admin,delete-state']], function() {
-    Route::delete('/state/{id}', 'StateController@deleteState');
-});
-
-*/
-//$api = app('api.router');
-$api = app('Dingo\Api\Routing\Router');
+$api = app('api.router');
+//$api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', ['namespace' => 'App\Http\Controllers'], function ($api) {
     // Non-Authenticated Routes
@@ -78,17 +35,21 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers'], function ($api) {
         $api->get('/role/{id?}', 'RoleController@getRole');
         $api->get('/state/{id?}', 'StateController@getState');
 
-        $api->get('/user/{id?}', [middleware =>['ability:admin,get-user'], uses=> 'UserController@getUser']);
-        $api->put('/user/{id}', [middleware =>['ability:admin,update-user'], uses=> 'UserController@updateUser']);
-        $api->delete('/user/{id}', [middleware =>['ability:admin,delete-user'], uses=> 'UserController@deleteUser']);
+        $api->get('/user/{id?}', ['middleware' => ['ability:admin,get-user'], 'uses' => 'UserController@getUser']);
+        $api->put('/user/{id}', ['middleware' => ['ability:admin,update-user'], 'uses' => 'UserController@updateUser']);
+        $api->delete('/user/{id}', ['middleware' => ['ability:admin,delete-user'], 'uses' => 'UserController@deleteUser']);
 
-        $api->post('/role', [middleware =>['ability:admin,create-role'], uses=> 'RoleController@postRole']);
-        $api->put('/role/{id}', [middleware =>['ability:admin,update-role'], uses=> 'RoleController@updateRole']);
-        $api->delete('/role/{id}', [middleware =>['ability:admin,delete-role'], uses=> 'RoleController@deleteRole']);
+        $api->post('/role', ['middleware' => ['ability:admin,create-role'], 'uses '=> 'RoleController@postRole']);
+        $api->put('/role/{id}', ['middleware' => ['ability:admin,update-role'], 'uses' => 'RoleController@updateRole']);
+        $api->delete('/role/{id}', ['middleware' => ['ability:admin,delete-role'], 'uses' => 'RoleController@deleteRole']);
 
-        $api->post('/state', [middleware =>['ability:admin,create-state'], uses=> 'StateController@postState']);
-        $api->put('/state/{id}', [middleware =>['ability:admin,update-state'], uses=> 'StateController@updateState']);
-        $api->delete('/state/{id}', [middleware =>['ability:admin,delete-state'], uses=> 'StateController@deleteState']);
+        $api->post('/state', ['middleware' => ['ability:admin,create-state'], 'uses' => 'StateController@postState']);
+        $api->put('/state/{id}', ['middleware' => ['ability:admin,update-state'], 'uses' => 'StateController@updateState']);
+        $api->delete('/state/{id}', ['middleware' => ['ability:admin,delete-state'], 'uses' => 'StateController@deleteState']);
+
+        $api->post('/category', ['middleware' => ['ability:admin,create-category'], 'uses' => 'CategoryController@postCategory']);
+        $api->put('/category/{id}', ['middleware' => ['ability:admin,update-category'], 'uses' => 'CategoryController@updateCategory']);
+        $api->delete('/category/{id}', ['middleware' => ['ability:admin,delete-category'], 'uses' => 'CategoryController@deleteCategory']);
 
     });
 });
