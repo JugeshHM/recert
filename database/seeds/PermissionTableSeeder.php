@@ -26,7 +26,11 @@ class PermissionTableSeeder extends Seeder
 
             array('name' => 'create-state', 'display_name' => 'Create State', 'description' => 'Create a State'),
             array('name' => 'update-state', 'display_name' => 'Update State', 'description' =>'Update a State'),
-            array('name' => 'delete-state', 'display_name' => 'Delete State', 'description' =>'Delete a State')
+            array('name' => 'delete-state', 'display_name' => 'Delete State', 'description' =>'Delete a State'),
+
+            array('name' => 'create-permission', 'display_name' => 'Create Permission', 'description' => 'Create a Permission'),
+            array('name' => 'update-permission', 'display_name' => 'Update Permission', 'description' =>'Update a Permission'),
+            array('name' => 'delete-permission', 'display_name' => 'Delete Permission', 'description' =>'Delete a Permission')
         );
 
         // Loop through each permission above and create the record for them in the database
