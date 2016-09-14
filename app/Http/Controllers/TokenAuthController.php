@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Response as HttpResponse;
 
 use JWTAuth;
 use DateTime;
@@ -22,14 +21,14 @@ class TokenAuthController extends Controller
 
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], HttpResponse::HTTP_UNAUTHORIZED);
+                return $this->response()->errorUnauthorized('invalid_credentials');
             }
         } catch (JWTException $e) {
-            return response()->json(['error' => 'could_not_create_token'], 500);
+            return $this->response()->errorInternal('could_not_create_token');
         }
 
         // if no errors are encountered we can return a JWT
-        return response()->json(compact('token'));
+        return $this->response()->array(compact('token'));
     }
 
     public function autoAuthenticate($user)
@@ -42,30 +41,30 @@ class TokenAuthController extends Controller
 
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], HttpResponse::HTTP_UNAUTHORIZED);
+                return $this->response()->errorUnauthorized('invalid_credentials');
             }
         } catch (JWTException $e) {
-            return response()->json(['error' => 'could_not_create_token'], 500);
+            return $this->response()->errorInternal('could_not_create_token');
         }
 
         // if no errors are encountered we can return a JWT
-        return response()->json(compact('token'));
+        return $this->response()->array(compact('token'));
     }
 
     public function getProfile()
     {
         try {
             if (! $user = JWTAuth::parseToken()->authenticate()) {
-                return  response()->json(['user_not_found'],  HttpResponse::HTTP_NOT_FOUND);
+                return  $this->response()->errorNotFound('user_not_found');
             }
         } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-            return response()->json(['token_expired'], $e->getStatusCode());
+            return $this->response()->errorUnauthorized('token_expired');
         } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-            return response()->json(['token_invalid'], $e->getStatusCode());
+            return $this->response()->errorUnauthorized('token_invalid');
         } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-            return response()->json(['token_absent'], $e->getStatusCode());
+            return $this->response()->errorUnauthorized('token_absent');
         }
-        return response()->json(compact('user'));
+        return $this->response()->array(compact('user'));
     }
 
     public function postRegister(Request $request)
@@ -82,7 +81,7 @@ class TokenAuthController extends Controller
             User::create($newuser);
             return $this->autoAuthenticate($tempdata);
         } catch (Exceptions $e) {
-            return response()->json(['error' => $e], 400);
+            return $this->response()->errorBadRequest('Bad Request');
         }
     }
 }
