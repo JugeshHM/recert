@@ -57,11 +57,13 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function deleteUser($id) {
+        $user = User::find($id);
         try{
-            $user = User::find($id);
-            if($user)
-            $user->delete();
-            return $this->response()->noContent();
+            if(isset($user)) {
+                $user->delete();
+                return $this->response()->noContent();
+            }
+            return $this->response()->errorNotFound();
         } catch(Exception $e) {
             return $this->response()->errorNotFound();
         }

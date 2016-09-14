@@ -82,12 +82,14 @@ class StateController extends Controller
      * @return Response
      */
     public function deleteState (Request $request, $id) {
-        try{
-            $state = State::find($id);
+        $state = State::find($id);
+        try {           
              // Regular Delete
-            if($state)
-            $state->delete(); // This will work no matter what
-            return $this->response()->noContent();
+            if(isset($state)) {
+                $state->delete(); // This will work no matter what
+                return $this->response()->noContent();
+            }
+            return $this->response()->errorNotFound();
         } catch(Exception $e) {
             return $this->response()->errorNotFound();
         }

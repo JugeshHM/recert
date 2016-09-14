@@ -81,15 +81,17 @@ class RoleController extends Controller
      * @return Response
      */
     public function deleteRole (Request $request, $id) {
-        try{
-            $role = Role::find($id);
+        $role = Role::find($id);
+        try {
             // Regular Delete
-            if($role)
-            $role->delete(); // This will work no matter what
-            return $this->response()->noContent();
+            if(isset($role)) {
+                $role->delete(); // This will work no matter what
+                return $this->response()->noContent();
+            }
+            return $this->response()->errorNotFound();
         } catch(Exception $e) {
             return $this->response()->errorNotFound();
-            }
+           }
      
     }
 }
