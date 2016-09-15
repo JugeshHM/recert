@@ -34,6 +34,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers'], function ($api) {
 
         $api->get('/role/{id?}', 'RoleController@getRole');
         $api->get('/state/{id?}', 'StateController@getState');
+        $api->get('/category/{id?}', 'CategoryController@getCategory');
         $api->get('/permission/{id?}', 'PermissionController@getPermission');
 
         $api->get('/user/{id?}', ['middleware' => ['ability:admin,get-user'], 'uses' => 'UserController@getUser']);
