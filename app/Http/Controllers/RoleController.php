@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
 
+use DateTime;
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Role;
-use DateTime;
+
+use Exception;
+
+use App\Role; 
 
 class RoleController extends Controller
 {
@@ -18,13 +22,13 @@ class RoleController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function getRole ($id = null, $status = HttpResponse::HTTP_OK) {
+    public function getRole ($id = null) {
         if ( $id == null) {
             $roles = Role::orderBy('id', 'asc')->get();
         } else {
             $roles = Role::find($id);
         }
-        return response()->json($roles, $status);
+        return $this->response()->array($roles);
     }
     /**
     * Post role
@@ -41,10 +45,11 @@ class RoleController extends Controller
         $role->created_at =  $date;
 
         try {
-            $role->save();
-            return $this->getRole($role->id, $status);
+            $role->save(); 
+            $response = $this->getRole($role->id);
+            return $response->setStatusCode($status); 
         } catch (Exceptions $e) {
-            return response()->json(['error' => $e], 400);
+            return $this->response()->errorBadRequest();
         }
     }
     /**
@@ -54,15 +59,20 @@ class RoleController extends Controller
      * @return Response
      */
     public function updateRole (Request $request, $id) {
-        $date = new DateTime();
-        $status = HttpResponse::HTTP_ACCEPTED;
-        $role = Role::find($id);
-        $role->name = $request->input('name');
-        $role->display_name = $request->input('display_name');
-        $role->description = $request->input('description');
-        $role->updated_at =  $date;
-        $role->save();
-        return $this->getRole($role->id, $status);
+        try{
+            $date = new DateTime();
+            $status = HttpResponse::HTTP_ACCEPTED;
+            $role = Role::find($id);
+            $role->name = $request->input('name');
+            $role->display_name = $request->input('display_name');
+            $role->description = $request->input('description');
+            $role->updated_at =  $date;
+            $role->save();
+            $response = $this->getRole($role->id);
+            return $response->setStatusCode($status);
+        } catch (Exception $e) {
+            return $this->response()->errorNotFound();
+        }
     }
     /**
      * Remove the specified resource from storage.
@@ -71,14 +81,17 @@ class RoleController extends Controller
      * @return Response
      */
     public function deleteRole (Request $request, $id) {
-        $status = HttpResponse::HTTP_NOT_FOUND;
         $role = Role::find($id);
-        // Regular Delete
-        $role->delete(); // This will work no matter what
-        // Force Delete
-        $role->users()->sync([]); // Delete relationship data
-        $role->perms()->sync([]); // Delete relationship data
-        $role->forceDelete(); // Now force delete will work regardless of whether the pivot table has cascading delete
-        return response()->json(null, $status);
+        try {
+            // Regular Delete
+            if(isset($role)) {
+                $role->delete(); // This will work no matter what
+                return $this->response()->noContent();
+            }
+            return $this->response()->errorNotFound();
+        } catch(Exception $e) {
+            return $this->response()->errorNotFound();
+           }
+     
     }
 }
