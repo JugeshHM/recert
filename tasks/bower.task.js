@@ -13,7 +13,7 @@ var Elixir = require('laravel-elixir');
 
 var Task = Elixir.Task;
 
-Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, cssOutputFile, cssOutputFolder) {
+Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, cssOutputFile, cssOutputFolder, fontsOutputFolder) {
 
 	var cssFile = cssOutputFile || 'vendor.css';
 	var jsFile = jsOutputFile || 'vendor.js';
@@ -52,13 +52,26 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, cssOutputFile, css
 		return gulp.src(mainBowerFiles())
 			.on('error', onError)
 			.pipe(filter('**/*.scss'))
-			.pipe(sass(cssFile))
+			.pipe(sass())
 			.pipe(concat(cssFile))
 			.pipe(gulpIf(config.production, minify()))
 			.pipe(gulp.dest(cssOutputFolder || config.css.outputFolder))
 			.pipe(notify({
 				title: 'Laravel Elixir',
 				subtitle: 'CSS Bower Files Imported!',
+				icon: __dirname + '/../node_modules/laravel-elixir/icons/laravel.png',
+				message: ' '
+			}));
+	}).watch('bower.json');
+
+    new Task('bower-fonts', function(){
+		return gulp.src(mainBowerFiles())
+			.on('error', onError)
+			.pipe(filter('**/*.{eot,svg,ttf,woff}'))
+			.pipe(gulp.dest(fontsOutputFolder || config.fonts.outputFolder))
+			.pipe(notify({
+				title: 'Laravel Elixir',
+				subtitle: 'Font Bower Files Imported!',
 				icon: __dirname + '/../node_modules/laravel-elixir/icons/laravel.png',
 				message: ' '
 			}));

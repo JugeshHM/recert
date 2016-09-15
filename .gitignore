@@ -5,8 +5,10 @@ Homestead.yaml
 Homestead.json
 /public/css
 /public/js
+/public/fonts
 /bower_components
 *.lock
 composer.lock
 _ide_helper.php
 .phpstorm.meta.php
+.phpcomplete_extended

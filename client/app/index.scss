@@ -15,22 +15,6 @@ html {
   width: 100%;
 }
 
-/**
- * variables
- */
-
-$use-percent: true;
-$is-fluid: true;
-$base-col-count: 12;
-$base-font-size: 13px;
-$background-color: #fefefd;
-
-@import '../../bower_components/normalize-scss/sass/normalize/import-now';
-@import '../../bower_components/skeleton-sass/skeleton/core/config';
-@import '../../bower_components/skeleton-sass/skeleton/themes/fresh/vars';
-@import '../../bower_components/skeleton-sass/skeleton/themes/fresh/base';
-@import '../../bower_components/skeleton-sass/skeleton/themes/fresh/skeleton';
-
 body {
     line-height: 1;
     -webkit-font-smoothing: antialiased;

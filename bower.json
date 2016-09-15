@@ -13,12 +13,23 @@
     "angular-aria": "^1.5.8",
     "angularLocalStorage": "ngStorage#^0.3.2",
     "angular-sanitize": "^1.5.8",
-    "skeleton-sass": "^3.0.0",
     "angular-touch": "^1.5.8",
     "angular-messages": "^1.5.8",
-    "ngstorage": "^0.3.11"
+    "ngstorage": "^0.3.11",
+    "ratchet": "^2.0.2"
   },
-  "overrides": {},
+  "overrides": {
+    "ratchet": {
+      "main": [
+         "./sass/ratchet.scss",
+         "./dist/ratchet.js",
+         "./dist/fonts/ratchicons.eot",
+         "./dist/fonts/ratchicons.svg",
+         "./dist/fonts/ratchicons.ttf",
+         "./dist/fonts/ratchicons.woff"
+      ]
+    }
+  },
   "resolutions": {
     "angular": "^1.5.8"
   }

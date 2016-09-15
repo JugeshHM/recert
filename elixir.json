@@ -4,8 +4,11 @@
     },
     "css": {
         "outputFolder": "public/css",
-        "less": {
+        "scss": {
             "folder": "../../client/"
         }
+    },
+    "fonts": {
+        "outputFolder": "public/fonts"
     }
 }
