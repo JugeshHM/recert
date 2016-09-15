@@ -34,6 +34,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers'], function ($api) {
 
         $api->get('/role/{id?}', 'RoleController@getRole');
         $api->get('/state/{id?}', 'StateController@getState');
+        $api->get('/permission/{id?}', 'PermissionController@getPermission');
 
         $api->get('/user/{id?}', ['middleware' => ['ability:admin,get-user'], 'uses' => 'UserController@getUser']);
         $api->put('/user/{id}', ['middleware' => ['ability:admin,update-user'], 'uses' => 'UserController@updateUser']);
@@ -50,6 +51,10 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers'], function ($api) {
         $api->post('/category', ['middleware' => ['ability:admin,create-category'], 'uses' => 'CategoryController@postCategory']);
         $api->put('/category/{id}', ['middleware' => ['ability:admin,update-category'], 'uses' => 'CategoryController@updateCategory']);
         $api->delete('/category/{id}', ['middleware' => ['ability:admin,delete-category'], 'uses' => 'CategoryController@deleteCategory']);
+
+        $api->post('/permission', ['middleware' => ['ability:admin,create-permission'], 'uses'=> 'PermissionController@postPermission']);
+        $api->put('/permission/{id}', ['middleware' => ['ability:admin,update-permission'], 'uses' => 'PermissionController@updatePermission']);
+        $api->delete('/permission/{id}', ['middleware' => ['ability:admin,delete-role'], 'uses' => 'PermissionController@deletePermission']);
 
     });
 });

@@ -3,85 +3,95 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response as HttpResponse;
+
+use DateTime;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Exception;
+
+use App\Permission; 
+
 class PermissionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function show($id)
-    {
-        //
+    public function getPermission ($id = null) {
+        if ( $id == null) {
+            $permissions = Permission::orderBy('id', 'asc')->get();
+        } else {
+            $permissions = Permission::find($id);
+        }
+        return $this->response()->array($permissions);
     }
-
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+    * Post permission
+    *
+    */
+    public function postPermission(Request $request) {
+        $date = new DateTime();
+        $status = HttpResponse::HTTP_CREATED;
+        $permission = new Permission;
 
+        $permission->name = $request->input('name');
+        $permission->display_name = $request->input('display_name');
+        $permission->description = $request->input('description');
+        $permission->created_at =  $date;
+
+        try {
+            $permission->save(); 
+            $response = $this->getPermission($permission->id);
+            return $response->setStatusCode($status); 
+        } catch (Exceptions $e) {
+            return $this->response()->errorBadRequest();
+        }
+    }
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Update Permission.
+     * @param  Request  $request
+     * @param  int|null $id
+     * @return Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function updatePermission (Request $request, $id) {
+        try{
+            $date = new DateTime();
+            $status = HttpResponse::HTTP_ACCEPTED;
+            $permission = Permission::find($id);
+            $permission->name = $request->input('name');
+            $permission->display_name = $request->input('display_name');
+            $permission->description = $request->input('description');
+            $permission->updated_at =  $date;
+            $permission->save();
+            $response = $this->getPermission($permission->id);
+            return $response->setStatusCode($status);
+        } catch (Exception $e) {
+            return $this->response()->errorNotFound();
+        }
     }
-
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function destroy($id)
-    {
-        //
+    public function deletePermission (Request $request, $id) {
+        $permission = Permission::find($id);
+        try {
+            // Regular Delete
+            if(isset($permission)) {
+                $permission->delete(); // This will work no matter what
+                return $this->response()->noContent();
+            }
+            return $this->response()->errorNotFound();
+        } catch(Exception $e) {
+            return $this->response()->errorNotFound();
+           }
+     
     }
 }
