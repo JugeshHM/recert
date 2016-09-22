@@ -5,10 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
 
+use DateTime;
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use Exception;
+
 use App\Category;
-use DateTime;
+
+
 
 class CategoryController extends Controller
 {
@@ -18,13 +24,13 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function getCategory ($id = null, $status = HttpResponse::HTTP_OK) {
+    public function getCategory ($id = null) {
         if ( $id == null) {
             $categories = Category::orderBy('id', 'asc')->get();
         } else {
             $categories = Category::find($id);
         }
-        return response()->json($categories, $status);
+        return $this->response()->array($categories);
     }
     /**
     * Post Category
@@ -38,13 +44,16 @@ class CategoryController extends Controller
         $category->name = $request->input('name');
         $category->display_name = $request->input('display_name');
         $category->description = $request->input('description');
+        $category->parent_cat = $request->input('parent_cat');
+        $category->course_hours = $request->input('course_hours');
         $category->created_at =  $date;
 
         try {
             $category->save();
-            return $this->getCategory($category->id, $status);
+            $response = $this->getCategory($category->id);
+            return $response->setStatusCode($status);
         } catch (Exceptions $e) {
-            return response()->json(['error' => $e], 400);
+            return $this->response()->errorBadRequest();
         }
     }
     /**
@@ -54,15 +63,22 @@ class CategoryController extends Controller
      * @return Response
      */
     public function updateCategory (Request $request, $id) {
+        try{
         $date = new DateTime();
         $status = HttpResponse::HTTP_ACCEPTED;
         $category = Category::find($id);
         $category->name = $request->input('name');
         $category->display_name = $request->input('display_name');
         $category->description = $request->input('description');
+        $category->parent_cat = $request->input('parent_cat');
+        $category->course_hours = $request->input('course_hours');
         $category->updated_at =  $date;
         $category->save();
-        return $this->getCategory($category->id, $status);
+        $response = $this->getCategory($category->id);
+        return $response->setStatusCode($status);
+        } catch (Exception $e) {
+            return $this->response()->errorNotFound();
+        }
     }
     /**
      * Remove the specified resource from storage.
@@ -71,10 +87,17 @@ class CategoryController extends Controller
      * @return Response
      */
     public function deleteCategory (Request $request, $id) {
-        $status = HttpResponse::HTTP_NOT_FOUND;
         $category = Category::find($id);
         // Regular Delete
-        $category->delete(); // This will work no matter what
-        return response()->json(null, $status);
+        try {           
+             // Regular Delete
+            if(isset($category)) {
+                $category->delete(); // This will work no matter what // This will work no matter what
+                return $this->response()->noContent();
+            }
+            return $this->response()->errorNotFound();
+        } catch(Exception $e) {
+            return $this->response()->errorNotFound();
+        }
     }
 }
