@@ -44,7 +44,7 @@ class CategoryController extends Controller
         $category->name = $request->input('name');
         $category->display_name = $request->input('display_name');
         $category->description = $request->input('description');
-        $category->parent_cat = $request->input('parent_cat');
+        $category->parent_id = $request->input('parent_id');
         $category->course_hours = $request->input('course_hours');
         $category->created_at =  $date;
 
@@ -70,7 +70,7 @@ class CategoryController extends Controller
         $category->name = $request->input('name');
         $category->display_name = $request->input('display_name');
         $category->description = $request->input('description');
-        $category->parent_cat = $request->input('parent_cat');
+        $category->parent_id = $request->input('parent_id');
         $category->course_hours = $request->input('course_hours');
         $category->updated_at =  $date;
         $category->save();
