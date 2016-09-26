@@ -12,9 +12,12 @@ use App\Http\Controllers\Controller;
 
 use Exception;
 
-use App\Role; 
+use Webpatser\Uuid\Uuid;
 
-class RoleController extends Controller
+use App\ThirdpartyToken; 
+
+
+class ThirdpartyTokenController extends Controller
 {
     /**
      * Display the specified resource.
@@ -22,53 +25,51 @@ class RoleController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function getRole ($id = null) {
+    public function getThirdpartyToken ($id = null) {
         if ( $id == null) {
-            $roles = Role::orderBy('id', 'asc')->get();
+            $tokens = ThirdpartyToken::orderBy('id', 'asc')->get();
         } else {
-            $roles = Role::find($id);
+            $tokens = ThirdpartyToken::find($id);
         }
-        return $this->response()->array($roles);
+        return $this->response()->array($tokens);
     }
     /**
-    * Post role
+    * Post token
     *
     */
-    public function postRole(Request $request) {
+    public function postThirdpartyToken(Request $request) {
         $date = new DateTime();
         $status = HttpResponse::HTTP_CREATED;
-        $role = new Role;
+        $token = new ThirdpartyToken;
 
-        $role->name = $request->input('name');
-        $role->display_name = $request->input('display_name');
-        $role->description = $request->input('description');
-        $role->created_at =  $date;
+        $token->token = Uuid::generate();
+        $token->disable = false;
+        $token->created_at =  $date;
 
         try {
-            $role->save(); 
-            $response = $this->getRole($role->id);
+            $token->save(); 
+            $response = $this->getThirdpartyToken($token->id);
             return $response->setStatusCode($status); 
         } catch (Exceptions $e) {
             return $this->response()->errorBadRequest();
         }
     }
     /**
-     * Update Role.
+     * Update ThirdpartyToken.
      * @param  Request  $request
      * @param  int|null $id
      * @return Response
      */
-    public function updateRole (Request $request, $id) {
+    public function updateThirdpartyToken (Request $request, $id) {
         try{
             $date = new DateTime();
             $status = HttpResponse::HTTP_ACCEPTED;
-            $role = Role::find($id);
-            $role->name = $request->input('name');
-            $role->display_name = $request->input('display_name');
-            $role->description = $request->input('description');
-            $role->updated_at =  $date;
-            $role->save();
-            $response = $this->getRole($role->id);
+            $token = ThirdpartyToken::find($id);
+            $token->token = Uuid::generate();
+            $token->disable = false;
+            $token->updated_at =  $date;
+            $token->save();
+            $response = $this->getThirdpartyToken($token->id);
             return $response->setStatusCode($status);
         } catch (Exception $e) {
             return $this->response()->errorNotFound();
@@ -80,12 +81,16 @@ class RoleController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function deleteRole (Request $request, $id) {
-        $role = Role::find($id);
+    public function deleteThirdpartyToken (Request $request, $id) {
+        $token = ThirdpartyToken::find($id);
+
         try {
             // Regular Delete
-            if(isset($role)) {
-                $role->delete(); // This will work no matter what
+            if(isset($token)) {
+                $date = new DateTime();
+                $token->disable = true;
+                $token->updated_at =  $date;
+                $token->save();
                 return $this->response()->noContent();
             }
             return $this->response()->errorNotFound();

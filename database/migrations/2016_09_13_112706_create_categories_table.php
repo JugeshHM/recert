@@ -17,6 +17,8 @@ class CreateCategoriesTable extends Migration
 			$table->string('name')->unique();
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
+            $table->integer('parent_cat')->nullable();
+            $table->string('course_hours')->nullable();
             $table->timestamps();
         });
     }

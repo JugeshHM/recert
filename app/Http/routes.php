@@ -57,5 +57,10 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers'], function ($api) {
         $api->put('/permission/{id}', ['middleware' => ['ability:admin,update-permission'], 'uses' => 'PermissionController@updatePermission']);
         $api->delete('/permission/{id}', ['middleware' => ['ability:admin,delete-role'], 'uses' => 'PermissionController@deletePermission']);
 
+        $api->post('/token', ['middleware' => ['ability:admin,create-token'], 'uses'=> 'ThirdpartyTokenController@postThirdpartyToken']);
+        $api->get('/token/{id?}', ['middleware' => ['ability:admin,get-token'], 'uses' => 'ThirdpartyTokenController@getThirdpartyToken']);
+        $api->put('/token/{id}', ['middleware' => ['ability:admin,update-token'], 'uses' => 'ThirdpartyTokenController@updateThirdpartyToken']);
+        $api->delete('/token/{id}', ['middleware' => ['ability:admin,delete-token'], 'uses' => 'ThirdpartyTokenController@deleteThirdpartyToken']);
+
     });
 });

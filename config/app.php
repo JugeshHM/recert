@@ -206,6 +206,8 @@ return [
         'JWTAuth'   => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory'=> Tymon\JWTAuth\Facades\JWTFactory::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        //Laravel UUID
+        'Uuid' => Webpatser\Uuid\Uuid::class,
 
     ],
 
